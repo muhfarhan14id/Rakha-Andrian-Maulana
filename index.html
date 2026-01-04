@@ -1,0 +1,374 @@
+import React, { useState, useEffect } from 'react';
+import { Github, Instagram, Mail, Globe, Code, Shield, Terminal, ExternalLink, Menu, X, ChevronDown } from 'lucide-react';
+
+const App = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
+  const [typedText, setTypedText] = useState('');
+  const fullText = "IT Enthusiast | Bug Hunter | Web Developer";
+
+  // Typing effect logic
+  useEffect(() => {
+    let index = 0;
+    const typeWriter = setInterval(() => {
+      setTypedText(fullText.slice(0, index + 1));
+      index++;
+      if (index > fullText.length) clearInterval(typeWriter);
+    }, 100);
+    return () => clearInterval(typeWriter);
+  }, []);
+
+  // Smooth scroll handler
+  const scrollTo = (id) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+      setActiveSection(id);
+      setIsMenuOpen(false);
+    }
+  };
+
+  // SEO Schema Markup (JSON-LD)
+  // Updated with new social links
+  const schemaMarkup = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Rakha Andrian Maulana",
+    "alternateName": "LanaVyn",
+    "url": "https://lanavyn.vercel.app", 
+    "jobTitle": "Bug Hunter & Web Developer",
+    "email": "muhfarhan14id@gmail.com",
+    "alumniOf": {
+      "@type": "School",
+      "name": "SMP Negeri 10 Depok"
+    },
+    "description": "Rakha Andrian Maulana (LanaVyn) adalah seorang IT Enthusiast, Web Developer, dan Bug Hunter yang bersekolah di SMP Negeri 10 Depok.",
+    "knowsAbout": ["Web Development", "Cybersecurity", "Bug Bounty", "React", "Network Security"],
+    "sameAs": [
+      "https://www.instagram.com/analuamnairdna",
+      "https://github.com/muhfarhan14id"
+    ]
+  };
+
+  return (
+    <div className="min-h-screen bg-neutral-950 text-neutral-200 font-sans selection:bg-emerald-500/30 selection:text-emerald-400">
+      {/* Injecting SEO Schema directly into the DOM */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaMarkup) }} />
+      
+      {/* Meta Tags Simulation for Preview */}
+      <div className="hidden">
+        <h1>Rakha Andrian Maulana - LanaVyn</h1>
+        <h2>IT Enthusiast SMP Negeri 10 Depok</h2>
+        <p>Portofolio resmi Rakha Andrian Maulana (LanaVyn). Bug hunter dan web developer muda dari Depok.</p>
+      </div>
+
+      {/* Navigation */}
+      <nav className="fixed top-0 w-full z-50 bg-neutral-950/80 backdrop-blur-md border-b border-neutral-800">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            <div className="flex-shrink-0 cursor-pointer font-bold text-xl text-emerald-400 tracking-tighter" onClick={() => scrollTo('home')}>
+              &lt;LanaVyn /&gt;
+            </div>
+            
+            {/* Desktop Menu */}
+            <div className="hidden md:block">
+              <div className="ml-10 flex items-baseline space-x-8">
+                {['Home', 'About', 'Skills', 'Projects', 'Contact'].map((item) => (
+                  <button
+                    key={item}
+                    onClick={() => scrollTo(item.toLowerCase())}
+                    className="hover:text-emerald-400 text-sm font-medium transition-colors duration-300"
+                  >
+                    {item}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Mobile menu button */}
+            <div className="md:hidden">
+              <button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="text-neutral-400 hover:text-white p-2"
+              >
+                {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile Menu */}
+        {isMenuOpen && (
+          <div className="md:hidden bg-neutral-900 border-b border-neutral-800">
+            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+              {['Home', 'About', 'Skills', 'Projects', 'Contact'].map((item) => (
+                <button
+                  key={item}
+                  onClick={() => scrollTo(item.toLowerCase())}
+                  className="text-gray-300 hover:text-emerald-400 block px-3 py-2 rounded-md text-base font-medium w-full text-left"
+                >
+                  {item}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+      </nav>
+
+      {/* Hero Section */}
+      <header id="home" className="relative h-screen flex items-center justify-center overflow-hidden">
+        {/* Abstract Background Elements */}
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-emerald-600/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+
+        <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
+          <div className="inline-block px-3 py-1 mb-4 text-xs font-mono text-emerald-400 border border-emerald-500/30 rounded-full bg-emerald-500/10">
+            Welcome to my secure space
+          </div>
+          <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-white mb-4">
+            Rakha Andrian <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-500">Maulana</span>
+          </h1>
+          <h2 className="text-2xl md:text-3xl text-neutral-400 font-mono mb-8 h-8">
+            {typedText}<span className="animate-blink">|</span>
+          </h2>
+          <p className="max-w-2xl mx-auto text-neutral-400 mb-10 text-lg">
+            Dikenal sebagai <strong className="text-white">LanaVyn</strong>. Siswa SMP Negeri 10 Depok yang berdedikasi mengamankan web dan membangun pengalaman digital yang imersif.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <button 
+              onClick={() => scrollTo('projects')}
+              className="px-8 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-medium rounded-lg transition-all shadow-lg shadow-emerald-500/20 flex items-center justify-center gap-2"
+            >
+              Lihat Portofolio <Code size={18} />
+            </button>
+            <button 
+              onClick={() => scrollTo('contact')}
+              className="px-8 py-3 border border-neutral-700 hover:border-emerald-500/50 hover:bg-neutral-900 text-white font-medium rounded-lg transition-all flex items-center justify-center gap-2"
+            >
+              Hubungi Saya <Mail size={18} />
+            </button>
+          </div>
+        </div>
+
+        <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce cursor-pointer text-neutral-500" onClick={() => scrollTo('about')}>
+          <ChevronDown size={32} />
+        </div>
+      </header>
+
+      {/* About Section */}
+      <section id="about" className="py-20 bg-neutral-900/50">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="space-y-6">
+              <h2 className="text-3xl font-bold text-white flex items-center gap-2">
+                <span className="text-emerald-400">01.</span> Tentang Saya
+              </h2>
+              <p className="text-neutral-400 leading-relaxed">
+                Halo! Saya <span className="text-white font-semibold">Rakha Andrian Maulana</span>, atau biasa dipanggil <span className="text-emerald-400 font-mono">LanaVyn</span> di dunia maya.
+              </p>
+              <p className="text-neutral-400 leading-relaxed">
+                Saat ini saya bersekolah di <span className="text-white">SMP Negeri 10 Depok</span>. Ketertarikan saya pada teknologi dimulai ketika saya penasaran bagaimana sebuah website bekerja. Rasa penasaran itu membawa saya mendalami dunia <strong>Web Development</strong> dan <strong>Cyber Security</strong>.
+              </p>
+              <p className="text-neutral-400 leading-relaxed">
+                Saya memiliki hobi unik yaitu mencari celah keamanan (Vulnerability Assessment) pada website untuk membantu pemilik sistem memperbaikinya, serta membangun website modern yang cepat dan responsif.
+              </p>
+              
+              <div className="flex gap-4 pt-4">
+                <div className="p-4 bg-neutral-900 border border-neutral-800 rounded-lg text-center w-full">
+                  <span className="block text-2xl font-bold text-white">IT</span>
+                  <span className="text-xs text-neutral-500 uppercase tracking-wider">Enthusiast</span>
+                </div>
+                <div className="p-4 bg-neutral-900 border border-neutral-800 rounded-lg text-center w-full">
+                  <span className="block text-2xl font-bold text-emerald-400">SMPN 10</span>
+                  <span className="text-xs text-neutral-500 uppercase tracking-wider">Depok</span>
+                </div>
+              </div>
+            </div>
+            <div className="relative group">
+              <div className="absolute -inset-1 bg-gradient-to-r from-emerald-600 to-purple-600 rounded-lg blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
+              <div className="relative p-8 bg-neutral-950 ring-1 ring-white/10 rounded-lg leading-none flex items-top justify-start space-x-6">
+                 <div className="space-y-4 font-mono text-sm text-neutral-300 w-full">
+                    <div className="flex justify-between border-b border-neutral-800 pb-2">
+                      <span>Status</span>
+                      <span className="text-emerald-400">Online</span>
+                    </div>
+                    <div className="flex justify-between border-b border-neutral-800 pb-2">
+                      <span>Location</span>
+                      <span>Depok, Indonesia</span>
+                    </div>
+                    <div className="flex justify-between border-b border-neutral-800 pb-2">
+                      <span>Interest</span>
+                      <span>Bug Bounty & Web Dev</span>
+                    </div>
+                    <div className="flex justify-between pb-2">
+                      <span>Editor</span>
+                      <span>VS Code</span>
+                    </div>
+                    <div className="pt-4 text-xs text-neutral-500">
+                      // Always learning, always evolving.
+                    </div>
+                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Skills Section */}
+      <section id="skills" className="py-20">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-white mb-12 flex items-center gap-2">
+            <span className="text-emerald-400">02.</span> Kemampuan Teknis
+          </h2>
+          
+          <div className="grid md:grid-cols-3 gap-8">
+            {/* Skill Card 1 */}
+            <div className="bg-neutral-900/50 p-6 rounded-xl border border-neutral-800 hover:border-emerald-500/50 transition-colors group">
+              <div className="w-12 h-12 bg-emerald-500/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-emerald-500/20 transition-colors">
+                <Code className="text-emerald-400" size={24} />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-3">Web Development</h3>
+              <p className="text-neutral-400 text-sm mb-4">
+                Membangun website modern menggunakan teknologi terkini.
+              </p>
+              <ul className="text-sm text-neutral-300 space-y-2">
+                <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></span>HTML, CSS, JavaScript</li>
+                <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></span>React.js & Tailwind CSS</li>
+                <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></span>Deployment (Vercel/Netlify)</li>
+              </ul>
+            </div>
+
+            {/* Skill Card 2 */}
+            <div className="bg-neutral-900/50 p-6 rounded-xl border border-neutral-800 hover:border-purple-500/50 transition-colors group">
+              <div className="w-12 h-12 bg-purple-500/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-purple-500/20 transition-colors">
+                <Shield className="text-purple-400" size={24} />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-3">Cyber Security</h3>
+              <p className="text-neutral-400 text-sm mb-4">
+                Menganalisis keamanan sistem untuk menemukan kerentanan.
+              </p>
+              <ul className="text-sm text-neutral-300 space-y-2">
+                <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-purple-400 rounded-full"></span>Vulnerability Assessment</li>
+                <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-purple-400 rounded-full"></span>Bug Hunting Basics</li>
+                <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-purple-400 rounded-full"></span>OWASP Top 10 Awareness</li>
+              </ul>
+            </div>
+
+            {/* Skill Card 3 */}
+            <div className="bg-neutral-900/50 p-6 rounded-xl border border-neutral-800 hover:border-cyan-500/50 transition-colors group">
+              <div className="w-12 h-12 bg-cyan-500/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-cyan-500/20 transition-colors">
+                <Terminal className="text-cyan-400" size={24} />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-3">Tools & Environment</h3>
+              <p className="text-neutral-400 text-sm mb-4">
+                Alat-alat yang saya gunakan sehari-hari.
+              </p>
+              <ul className="text-sm text-neutral-300 space-y-2">
+                <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-cyan-400 rounded-full"></span>VS Code & Terminal</li>
+                <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-cyan-400 rounded-full"></span>Git & Github</li>
+                <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-cyan-400 rounded-full"></span>Burp Suite (Basic)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Projects Section */}
+      <section id="projects" className="py-20 bg-neutral-900/50">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-white mb-12 flex items-center gap-2">
+            <span className="text-emerald-400">03.</span> Portofolio & Temuan
+          </h2>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Project 1 */}
+            <div className="group relative overflow-hidden rounded-xl bg-neutral-950 border border-neutral-800">
+              <div className="p-6">
+                <div className="flex justify-between items-start mb-4">
+                  <Globe className="text-emerald-400" size={32} />
+                  <a href="#" className="text-neutral-400 hover:text-white transition-colors"><ExternalLink size={20} /></a>
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2 group-hover:text-emerald-400 transition-colors">Personal Portfolio V1</h3>
+                <p className="text-neutral-400 text-sm mb-4">
+                  Website portofolio yang Anda lihat saat ini. Dibuat dengan fokus pada SEO, performa tinggi, dan desain "Cyber" yang mencerminkan identitas saya.
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  <span className="px-3 py-1 text-xs bg-neutral-900 text-emerald-300 rounded-full border border-neutral-800">React</span>
+                  <span className="px-3 py-1 text-xs bg-neutral-900 text-emerald-300 rounded-full border border-neutral-800">Tailwind</span>
+                  <span className="px-3 py-1 text-xs bg-neutral-900 text-emerald-300 rounded-full border border-neutral-800">Schema.org</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Project 2 - Placeholder for Bug Bounty */}
+            <div className="group relative overflow-hidden rounded-xl bg-neutral-950 border border-neutral-800">
+              <div className="p-6">
+                <div className="flex justify-between items-start mb-4">
+                  <Shield className="text-purple-400" size={32} />
+                  <span className="text-xs font-mono text-purple-400 border border-purple-500/30 px-2 py-1 rounded">Reported</span>
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2 group-hover:text-purple-400 transition-colors">Vulnerability Report</h3>
+                <p className="text-neutral-400 text-sm mb-4">
+                  (Private Disclosure) Menemukan celah XSS (Cross Site Scripting) pada salah satu website edukasi lokal dan melaporkannya kepada admin untuk diperbaiki.
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  <span className="px-3 py-1 text-xs bg-neutral-900 text-purple-300 rounded-full border border-neutral-800">Bug Hunting</span>
+                  <span className="px-3 py-1 text-xs bg-neutral-900 text-purple-300 rounded-full border border-neutral-800">XSS Reflected</span>
+                  <span className="px-3 py-1 text-xs bg-neutral-900 text-purple-300 rounded-full border border-neutral-800">Reporting</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA / Contact Section */}
+      <section id="contact" className="py-20">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <h2 className="text-3xl font-bold text-white mb-6">Let's Connect!</h2>
+          <p className="text-neutral-400 mb-8 text-lg">
+            Saya selalu terbuka untuk berdiskusi tentang teknologi, coding, atau keamanan siber. 
+            Cari saya sebagai <strong className="text-emerald-400">LanaVyn</strong> di internet!
+          </p>
+          
+          <div className="flex flex-wrap justify-center gap-6">
+            <a 
+              href="https://www.instagram.com/analuamnairdna?igsh=d2ZkcjE0bXl3ZDV0" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="flex items-center gap-3 px-6 py-4 bg-neutral-900 border border-neutral-800 rounded-xl hover:border-emerald-500 hover:scale-105 transition-all group"
+            >
+              <Instagram className="text-neutral-400 group-hover:text-pink-500 transition-colors" size={24} />
+              <span className="text-neutral-300 font-medium">Instagram</span>
+            </a>
+            <a 
+              href="https://github.com/muhfarhan14id" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="flex items-center gap-3 px-6 py-4 bg-neutral-900 border border-neutral-800 rounded-xl hover:border-emerald-500 hover:scale-105 transition-all group"
+            >
+              <Github className="text-neutral-400 group-hover:text-white transition-colors" size={24} />
+              <span className="text-neutral-300 font-medium">Github</span>
+            </a>
+            <a 
+              href="mailto:muhfarhan14id@gmail.com" 
+              className="flex items-center gap-3 px-6 py-4 bg-neutral-900 border border-neutral-800 rounded-xl hover:border-emerald-500 hover:scale-105 transition-all group"
+            >
+              <Mail className="text-neutral-400 group-hover:text-emerald-400 transition-colors" size={24} />
+              <span className="text-neutral-300 font-medium">Email</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="py-8 border-t border-neutral-900 text-center bg-neutral-950">
+        <p className="text-neutral-500 text-sm font-mono">
+          © {new Date().getFullYear()} Rakha Andrian Maulana (LanaVyn). <br className="md:hidden" /> Built with React & Tailwind.
+        </p>
+      </footer>
+    </div>
+  );
+};
+
+export default App;
